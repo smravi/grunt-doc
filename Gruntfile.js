@@ -16,40 +16,15 @@ module.exports = function(grunt) {
       app: {
         // Specify `src` and `dest` directly on the task object
         src: [
-          '.docs/document/**/*'
+          'src/**/*.js'
         ],
       options: {
-          output: '.docs/docco',
+          output: 'docs/docco',
           layout: 'classic',
-          template: 'docs/docco-template.jst',
           css: 'docs/docco-template.css',
           extension: null,
           languages: {},
-          cleanDocs : {
-              src: ['.docs']
-          },
-          copyDocs : {
-              options: {
-                  cwd: 'docs',
-                  expand: true,
-                  src: [
-                      'src/**/*.js'
-                  ],
-                  dest: '.docs/'
-              }
-          },
-          copyCodeToDocs : {
-              options: {
-                  expand: true,
-                  src: [
-                      'src/**/*.js'
-                  ],
-                  dest: '.docs/document/',
-                  rename: function (dest, src) {
-                      return dest + src. replace( /[\\\/]+/g, '!');
-                  }
-              }
-          }
+          tempDir:'.docs/'
         }
       }
     },

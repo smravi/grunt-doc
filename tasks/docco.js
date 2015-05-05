@@ -11,12 +11,11 @@ var util = require('util');
 
 module.exports = function (grunt) {
     function clean(cleanConfig) {
-        console.log("In clean");
         var options = {
-            force: cleanConfig.force || grunt.option('force') === true,
-            'no-write': cleanConfig['no-write'] || grunt.option('no-write') === true,
+            force: grunt.option('force') === true,
+            'no-write': grunt.option('no-write') === true,
         };
-        console.log(util.inspect(cleanConfig));
+        console.log(cleanConfig.src);
         cleanConfig.src.forEach(function (filepath) {
             if (!grunt.file.exists(filepath)) {
                 return false;
@@ -61,6 +60,7 @@ module.exports = function (grunt) {
             process: copyConfig.options.process || options.process || options.processContent,
             noProcess: copyConfig.options.noProcess ||options.noProcess || options.processContentExclude,
         };
+        console.log(copyConfig.options.src);
         grunt.file.expandMapping(copyConfig.options.src, copyConfig.options.dest, copyConfig.options).forEach(function(f) {
             var src = f.src[0];
             var dest = f.dest;
@@ -78,13 +78,38 @@ module.exports = function (grunt) {
         });
         // Merge task-specific and/or target-specific options with these defaults.
         grunt.verbose.writeflags(options, 'Options');
+        // clean any existing old docs
+        var cleanConfig = {
+            src: [options.tempDir]
+        };
+        clean(cleanConfig);
+        // copy the files to document
+        var copyDocs = {
+            options: {
+                cwd: 'docs',
+                expand: true,
+                src: this.filesSrc,
+                dest: options.tempDir
+            }
+        };
+        copy(copyDocs);
+        // construct files paths for multi folder
+        var copyCodeToDocs = {
+            options: {
+                expand: true,
+                src: this.filesSrc,
+                dest: options.tempDir,
+                rename: function (dest, src) {
+                return dest + src. replace( /[\\\/]+/g, '!');
+                }
+            }
+        };
+        copy(copyCodeToDocs);
 
-        clean(options.cleanDocs);
-        copy(options.copyDocs);
-        copy(options.copyCodeToDocs);
-
+        // docco to generate document
+        var srcArr = grunt.file.expand(options.tempDir+'/**');
         // Either set the destination in the files block, or (prefferred) in { options: output }
         this.options.output = this.options.output || (this.file && this.file.dest);
-        docco.document(this.options({args: this.filesSrc}), this.async());
+        docco.document(this.options({args: srcArr}), this.async());
     });
 };

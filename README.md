@@ -1,6 +1,6 @@
-# grunt-docco
+# grunt-doc
 
-Grunt Docco plugin.
+Grunt Docco plugin with multi folder support.
 
 ## Getting Started
 Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-docco --save-dev`
@@ -20,10 +20,15 @@ Add the task config to the grunt initConfig block.
 
 ```
 docco: {
-  debug: {
-    src: ['test/**/*.js'],
+  app : {
+    src: ['src/**/*.js'],
     options: {
-      output: 'docs/'
+      output: 'docs/docco',
+      layout: 'classic',
+      css: 'docs/docco-template.css',
+      extension: null,
+      languages: {},
+      tempDir:'.docs/' // temp directory to store the intermediate files for documentation
     }
   }
 }
@@ -41,5 +46,4 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 * 0.2.0: Early release, depended on python's pygments.
 
 ## License
-Copyright (c) 2012 David Souther  
 Licensed under the MIT license.

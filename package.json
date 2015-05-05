@@ -1,49 +1,28 @@
 {
   "name": "grunt-docco",
   "description": "Grunt Docco plugin.",
-  "version": "0.3.3",
+  "version": "0.1.0",
   "homepage": "https://github.com/DavidSouther/grunt-docco",
   "author": {
-    "name": "David Souther",
-    "email": "davidsouther@gmail.com",
-    "url": "http://www.davidsouther.com"
+    "name": "Sruthi Ravi",
+    "email": "sruthiin92@gmail.com"
   },
   "contributors": [
     {
-      "name": "Alasdair Mercer",
-      "email": "mercer.alasdair@gmail.com"
+      "name": "Sruthi Ravi",
+      "email": "sruthiin92@gmail.com"
     },
     {
-      "name": "Asa Ayers",
+      "name": "Pranav Jha",
       "email": "Asa.Ayers@Gmail.com"
-    },
-    {
-      "name": "Brad Dougherty",
-      "email": "me@brad.is"
-    },
-    {
-      "name": "Diego Fernandez",
-      "email": "diegof79@gmail.com"
-    },
-    {
-      "name": "Ilya Radchenko",
-      "email": "ilya@burstcreations.com"
-    },
-    {
-      "name": "Sam Breed",
-      "email": "sam@quickleft.com"
-    },
-    {
-      "name": "Simon Elliott",
-      "email": "simon@papercreatures.com"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/DavidSouther/grunt-docco.git"
+    "url": "git://github.com/smravi/grunt-doc.git"
   },
   "bugs": {
-    "url": "https://github.com/DavidSouther/grunt-docco/issues"
+    "url": "https://github.com/smravi/grunt-doc/issues"
   },
   "licenses": [
     {
@@ -88,16 +67,12 @@
   },
   "maintainers": [
     {
-      "name": "DavidSouther",
-      "email": "davidsouther@gmail.com"
+      "name": "Sruthi Ravi",
+      "email": "sruthiin92@gmail.com"
     },
     {
-      "name": "davidsouther",
-      "email": "davidsouther@gmail.com"
-    },
-    {
-      "name": "neocotic",
-      "email": "mercer.alasdair@gmail.com"
+      "name": "Pranav Jha",
+      "email": "Asa.Ayers@Gmail.com"
     }
   ],
   "directories": {},
