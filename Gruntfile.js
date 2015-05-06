@@ -21,7 +21,6 @@ module.exports = function(grunt) {
       options: {
           output: 'docs/docco',
           layout: 'classic',
-          css: 'docs/docco-template.css',
           extension: null,
           languages: {},
           tempDir:'.docs/'

@@ -7,7 +7,6 @@
 "use strict";
 var docco = require('docco');
 var rimraf = require('rimraf');
-var util = require('util');
 
 module.exports = function (grunt) {
     function clean(cleanConfig) {
@@ -15,7 +14,6 @@ module.exports = function (grunt) {
             force: grunt.option('force') === true,
             'no-write': grunt.option('no-write') === true,
         };
-        console.log(cleanConfig.src);
         cleanConfig.src.forEach(function (filepath) {
             if (!grunt.file.exists(filepath)) {
                 return false;
@@ -53,7 +51,7 @@ module.exports = function (grunt) {
             processContent: false,
             processContentExclude: [],
             timestamp: false,
-            mode: false,
+            mode: false
         };
         var copyOptions = {
             encoding: copyConfig.options.encoding || options.encoding,
@@ -74,7 +72,7 @@ module.exports = function (grunt) {
 
     grunt.registerMultiTask('docco', 'Docco processor.', function () {
         var options = this.options({
-            layout: 'parallel'
+            layout: 'parallel',
         });
         // Merge task-specific and/or target-specific options with these defaults.
         grunt.verbose.writeflags(options, 'Options');
@@ -110,6 +108,6 @@ module.exports = function (grunt) {
         var srcArr = grunt.file.expand(options.tempDir+'/**');
         // Either set the destination in the files block, or (prefferred) in { options: output }
         this.options.output = this.options.output || (this.file && this.file.dest);
-        docco.document(this.options({args: srcArr}), this.async());
+        docco.document(this.options({args: srcArr , template: 'template/docco-template.jst', css:'template/docco-template.css'}), this.async());
     });
 };
