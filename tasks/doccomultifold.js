@@ -7,6 +7,7 @@
 "use strict";
 var docco = require('docco');
 var rimraf = require('rimraf');
+var util = require('util');
 
 module.exports = function (grunt) {
     function clean(cleanConfig) {
@@ -16,18 +17,18 @@ module.exports = function (grunt) {
         };
         cleanConfig.src.forEach(function (filepath) {
             if (!grunt.file.exists(filepath)) {
-                return false;
+                return;
             }
             grunt.log.write((options['no-write'] ? 'Not actually cleaning ' : 'Cleaning ') + filepath + '...');
             if (!options.force) {
                 if (grunt.file.isPathCwd(filepath)) {
                     grunt.verbose.error();
                     grunt.fail.warn('Cannot delete the current working directory.');
-                    return false;
+                    return;
                 } else if (!grunt.file.isPathInCwd(filepath)) {
                     grunt.verbose.error();
                     grunt.fail.warn('Cannot delete files outside the current working directory.');
-                    return false;
+                    return;
                 }
             }
 
@@ -58,7 +59,6 @@ module.exports = function (grunt) {
             process: copyConfig.options.process || options.process || options.processContent,
             noProcess: copyConfig.options.noProcess ||options.noProcess || options.processContentExclude,
         };
-        console.log(copyConfig.options.src);
         grunt.file.expandMapping(copyConfig.options.src, copyConfig.options.dest, copyConfig.options).forEach(function(f) {
             var src = f.src[0];
             var dest = f.dest;
@@ -70,15 +70,15 @@ module.exports = function (grunt) {
         });
     }
 
-    grunt.registerMultiTask('docco', 'Docco processor.', function () {
+    grunt.registerMultiTask('doccomultifold', 'Docco multi folder processor.', function () {
         var options = this.options({
-            layout: 'parallel',
+            layout: 'parallel'
         });
         // Merge task-specific and/or target-specific options with these defaults.
         grunt.verbose.writeflags(options, 'Options');
         // clean any existing old docs
         var cleanConfig = {
-            src: [options.tempDir]
+            src: [options.tempDir, options.output]
         };
         clean(cleanConfig);
         // copy the files to document

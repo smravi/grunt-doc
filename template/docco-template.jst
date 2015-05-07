@@ -21,11 +21,8 @@
         <a href="index.html">
             <img alt="documentation" src="https://img.shields.io/badge/documentation-home-lightpink.svg" />
         </a>
-        <a href="https://github.corp.ebay.com/SFWARespProgIntegration/fitmentap/">
+        <a href="https://github.com/smravi/grunt-doc">
             <img alt="version" src="https://img.shields.io/badge/version-1.0.0-brightgreen.svg" />
-        </a>
-        <a href="http://ebayci.qa.ebay.com/fitment-app/">
-            <img alt="Jenkins Status" src="https://img.shields.io/badge/Jenkins-Status-brightgreen.svg" />
         </a>
     </div>
     <% if (sources.length > 0) { %>
@@ -34,7 +31,7 @@
        var links=[], treeJSON = [];
         <% for (var i=0, l=sources.length; i<l; i++) { %>
             <% var source = sources[i]; %>
-            var dest = '<%= path.basename(destination(source)) %>'
+            var dest = '<%= path.basename(source)%>'
             links.push(dest);
         <% } %>
         var hierarchy = {
@@ -42,16 +39,16 @@
           children: []
         };
         links.forEach(function (element) {
-          var hrcy = element.split('!');
+          var srcArr = element.split('!');
           var thisLevel = hierarchy;
-          hrcy.forEach(function (levelName, levelIndex) {
+          srcArr.forEach(function (levelName, levelIndex) {
             var level = thisLevel.children.filter(function (level) {
               return level.label === levelName;
             });
             if (level.length) {
               thisLevel = level[0]
             } else {
-                if(levelIndex !== hrcy.length-1) {
+                if(levelIndex !== srcArr.length-1) {
                      var newLevel = {
                         label: levelName,
                         children: []
@@ -66,8 +63,9 @@
             }
           });
         });
+        hierarchy.label = hierarchy.children[0].label;
+        hierarchy.children = hierarchy.children[0].children;
         treeJSON.push(hierarchy);
-        console.log(JSON.stringify(treeJSON));
 
     $(document).ready(function(){
         $('#tree1').tree({
@@ -81,13 +79,17 @@
                  // The clicked node is 'event.node'
                  var node = event.node;
                  var id = node.name;
-                 if(id.indexOf('.html')){
+                 if(id.indexOf('.') !== -1 ){
                     var path =[], pathStr='';
-                    while(node.name !== 'root'){
+                    while(node.name){
                         path.push(node.name);
                         node = node.parent;
                     }
                     path.reverse();
+                    var leaf = path[path.length-1]
+                    if(leaf) {
+                        path[path.length-1] = leaf.substring(0, leaf.lastIndexOf('.')) + '.html';
+                    }
                     pathStr = path.join('!');
                     $(location).attr('href', pathStr);
                  }

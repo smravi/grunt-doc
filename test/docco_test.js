@@ -2,7 +2,7 @@
 var grunt = require('grunt');
 var rr = require("rimraf");
 
-module.exports.docco = {
+module.exports.doccomultifold = {
   tearDown: function (callback) {
      rr('docs', function(){});
      callback();
